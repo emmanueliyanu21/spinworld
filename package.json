@@ -1,0 +1,23 @@
+{
+  "name": "Spinworld",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emmanueliyanu21/Spinworld.git"
+  },
+  "keywords": [],
+  "author": "Emmanuel Iyanu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emmanueliyanu21/Spinworld/issues"
+  },
+  "homepage": "https://github.com/emmanueliyanu21/Spinworld#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

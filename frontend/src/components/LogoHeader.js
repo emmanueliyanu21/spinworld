@@ -7,7 +7,7 @@ const LogoHeader = () => {
     <div>
       <Navbar expand="lg" className="" collapseOnSelect>
         <Container>
-          <LinkContainer>
+          <LinkContainer to="/">
             <Navbar.Brand href="#home" className="logo-holder">
               <img
                 src="./image/logo-folder/logo.jpg"

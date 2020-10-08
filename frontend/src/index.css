@@ -1,5 +1,7 @@
-.main {
-  min-height: 80vh;
+:root {
+  --blue: #0098da;
+  --yellow: #f58634;
+  --royal-blue: #314266;
 }
 
 .header-bk-color {
@@ -42,5 +44,39 @@
 
 .header-icon .fas {
   border: 1px solid #fff;
-  color: #fff;
+  border-radius: 2px;
+  padding: 3px;
+  color: #fff !important;
+}
+
+.header-bk-color form {
+  background-color: transparent !important;
+  color: #fff !important;
+  position: relative;
+}
+
+.header-bk-color form input {
+  background-color: transparent !important;
+  color: #fff !important;
+  max-width: 10rem !important;
+  min-height: 7px !important;
+  border: 1px solid #fff !important;
+  border-radius: 50px !important;
+  margin-top: 3px !important;
+  margin-bottom: 3px !important;
+}
+
+.header-bk-color form input::placeholder {
+  color: #fff !important;
+  font-size: 16px;
+}
+
+.header-bk-color form input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.header-bk-color form .fas {
+  margin-left: -3rem;
+  font-size: 14px;
 }

@@ -22,6 +22,7 @@ const NavbarHeader = () => {
                 placeholder="Search"
                 className="mr-sm-2"
               />
+              <i className="fas fa-search"></i>
             </Form>
           </Navbar.Collapse>
         </Container>

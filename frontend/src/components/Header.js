@@ -15,16 +15,16 @@ const Header = () => {
               <Nav.Link href="#link">BUILDING MATERIALS</Nav.Link>
             </Nav>
             <Nav className="ml-auto header-icon">
-              <Nav.Link href="#home">
-                <i className="fas fa-facebook"></i>
+              <Nav.Link href="">
+                <i className="fas fa-facebook-f"></i>
               </Nav.Link>
-              <Nav.Link href="#link">
+              <Nav.Link href="">
                 <i className="fas fa-twitter"></i>
               </Nav.Link>
-              <Nav.Link href="#home">
+              <Nav.Link href="">
                 <i className="fas fa-instagram"></i>
               </Nav.Link>
-              <Nav.Link href="#link">
+              <Nav.Link href="">
                 <i className="fas fa-linkedin"></i>
               </Nav.Link>
             </Nav>

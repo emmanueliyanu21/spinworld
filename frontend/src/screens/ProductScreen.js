@@ -19,11 +19,11 @@ const ProductScreen = ({ match }) => {
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${match.params.id}`);
 
-      setProduct (data);
+      setProduct(data);
     };
 
     fetchProduct();
-  }, []);
+  }, [match]);
 
   return (
     <Container>

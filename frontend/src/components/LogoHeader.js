@@ -1,18 +1,21 @@
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 const LogoHeader = () => {
   return (
     <div>
       <Navbar expand="lg" className="" collapseOnSelect>
         <Container>
-          <Navbar.Brand href="#home" className="logo-holder">
-            <img
-              src="./image/logo-folder/logo.jpg"
-              className="img-fluid"
-              alt=""
-            />
-          </Navbar.Brand>
+          <LinkContainer>
+            <Navbar.Brand href="#home" className="logo-holder">
+              <img
+                src="./image/logo-folder/logo.jpg"
+                className="img-fluid"
+                alt=""
+              />
+            </Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto logo-header-icon">

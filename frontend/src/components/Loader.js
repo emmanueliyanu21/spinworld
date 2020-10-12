@@ -15,7 +15,7 @@ const Message = () => {
     >
       <span className="sr-only">Loading...</span>
     </Spinner>
-  );
+  ); 
 };
 
 export default Message;

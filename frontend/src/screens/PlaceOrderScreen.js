@@ -46,7 +46,7 @@ const PlaceOrderScreen = ({ history }) => {
     // eslint-disable-next-line
   }, [history, success]);
 
-  const placeOrderHandler = (e) => {
+  const placeOrderHandler = () => {
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
@@ -116,7 +116,7 @@ const PlaceOrderScreen = ({ history }) => {
         <Col md={4}>
           <Card>
             <ListGroup variant="flush">
-              <ListGroup.Item>
+              <ListGroup.Item> 
                 <Row>
                   <Col>Items</Col>
                   <Col>${cart.itemsPrice}</Col>

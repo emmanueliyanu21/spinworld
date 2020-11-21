@@ -21,7 +21,7 @@ const OrderScreen = ({ match }) => {
   //       return (Math.round(num * 100) / 100).toFixed(2);
   //     };
 
-  //     order.itemsPrice = addDecimals(
+  //     o rder.itemsPrice = addDecimals(
   //       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   //     );
   //   }
@@ -50,7 +50,7 @@ const OrderScreen = ({ match }) => {
                 <strong>Name: </strong> {order.user.name}
               </p>
               <p>
-                <strong>Email: </strong>{" "}
+                <strong>Email: </strong>
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>

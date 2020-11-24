@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -14,17 +14,17 @@ const OrderScreen = ({ match }) => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
 
-  //   if (!loading) {
-  //     //calculate prices
+  if (!loading) {
+    //calculate prices
 
-  //     const addDecimals = (num) => {
-  //       return (Math.round(num * 100) / 100).toFixed(2);
-  //     };
+    const addDecimals = (num) => {
+      return (Math.round(num * 100) / 100).toFixed(2);
+    };
 
-  //     o rder.itemsPrice = addDecimals(
-  //       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-  //     );
-  //   }
+    order.itemsPrice = addDecimals(
+      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    );
+  }
 
   useEffect(() => {
     if (!order || order._id !== orderId) {
@@ -39,7 +39,7 @@ const OrderScreen = ({ match }) => {
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <>
+    <Container>
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>
@@ -143,7 +143,7 @@ const OrderScreen = ({ match }) => {
           </Card>
         </Col>
       </Row>
-    </>
+    </Container>
   );
 };
 

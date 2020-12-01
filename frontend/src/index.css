@@ -101,3 +101,7 @@ h2 {
 .rating span {
   margin: 0.1rem;
 }
+
+.header-bk-color .black-dropdown {
+  color: #000 !important;
+}

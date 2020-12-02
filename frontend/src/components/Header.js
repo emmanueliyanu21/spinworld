@@ -24,7 +24,7 @@ const Header = () => {
               <Nav.Link href="#link">CONSULTANT</Nav.Link>
               <Nav.Link href="#home">DESIGNER</Nav.Link>
               <Nav.Link href="#link">MARKETER</Nav.Link>
-              <Nav.Link href="#link">BUILDING MATERIALS</Nav.Link>
+              {/* <Nav.Link href="#link">BUILDING MATERIALS</Nav.Link> */}
             </Nav>
             <Nav className="ml-auto header-icon">
               <LinkContainer to="/cart">
@@ -52,17 +52,23 @@ const Header = () => {
                     <i className="fas fa-user"></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
-                )}
+              )}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu'>
-                  <LinkContainer to='/admin/userlist'>
-                    <NavDropdown.Item>Users</NavDropdown.Item>
+                <NavDropdown title="Admin" id="adminmenu">
+                  <LinkContainer to="/admin/userlist">
+                    <NavDropdown.Item className="black-dropdown">
+                      Users
+                    </NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/productlist'>
-                    <NavDropdown.Item>Products</NavDropdown.Item>
+                  <LinkContainer to="/admin/productlist">
+                    <NavDropdown.Item className="black-dropdown">
+                      Products
+                    </NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to='/admin/orderlist'>
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                  <LinkContainer to="/admin/orderlist">
+                    <NavDropdown.Item className="black-dropdown">
+                      Orders
+                    </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
               )}

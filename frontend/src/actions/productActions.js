@@ -76,10 +76,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       type: PRODUCT_DELETE_SUCCESS,
     })
   } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message
+    // const message =
+    //   error.response && error.response.data.message
+    //     ? error.response.data.message
+    //     : error.message
     // if (message === 'Not authorized, token failed') {
     //   dispatch(logout())
     // }
@@ -113,10 +113,10 @@ export const createProduct = () => async (dispatch, getState) => {
       payload: data,
     })
   } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message
+    // const message =
+    //   error.response && error.response.data.message
+    //     ? error.response.data.message
+    //     : error.message
     // if (message === 'Not authorized, token failed') {
     //   dispatch(logout())
     // }
@@ -156,10 +156,10 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     })
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data })
   } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message
+    // const message =
+    //   error.response && error.response.data.message
+    //     ? error.response.data.message
+    //     : error.message
     // if (message === 'Not authorized, token failed') {
     //   dispatch(logout())
     // }

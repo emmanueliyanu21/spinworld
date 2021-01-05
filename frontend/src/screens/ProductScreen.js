@@ -169,7 +169,7 @@ const ProductScreen = ({ history, match }) => {
                   {successProductReview && (
                     <Message variant="success">
                       Review submitted successfully
-                    </Message>
+                    </Message>  
                   )}
                   {loadingProductReview && <Loader />}
                   {errorProductReview && (

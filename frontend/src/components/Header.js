@@ -1,13 +1,13 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { logout } from "../actions/userActions";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { logout } from '../actions/userActions';
 
 const Header = () => {
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
@@ -15,58 +15,68 @@ const Header = () => {
   };
   return (
     <div>
-      <Navbar expand="lg" className="header-bk-color" collapseOnSelect>
+      <Navbar expand='lg' className='header-bk-color' collapseOnSelect>
         <Container>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link href="#home">REAL ESTATE</Nav.Link>
-              <Nav.Link href="#link">CONSULTANT</Nav.Link>
-              <Nav.Link href="#home">DESIGNER</Nav.Link>
-              <Nav.Link href="#link">MARKETER</Nav.Link>
+          <Navbar.Toggle aria-controls='basic-navbar-nav' />
+          <Navbar.Collapse id='basic-navbar-nav'>
+            <Nav className='mr-auto'>
+              <LinkContainer to='/properties'>
+                <Nav.Link>REAL ESTATE</Nav.Link>
+              </LinkContainer>
+
+              <Nav.Link href='#link'>CONSULTANT</Nav.Link>
+              <Nav.Link href='#home'>DESIGNER</Nav.Link>
+              <Nav.Link href='#link'>MARKETER</Nav.Link>
               {/* <Nav.Link href="#link">BUILDING MATERIALS</Nav.Link> */}
             </Nav>
-            <Nav className="ml-auto header-icon">
-              <LinkContainer to="/cart">
+            <Nav className='ml-auto header-icon'>
+              <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i> Cart
+                  <i className='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
-                  <LinkContainer to="profile">
-                    <NavDropdown.Item className="black-dropdown">
+                <NavDropdown title={userInfo.name} id='username'>
+                  <LinkContainer to='profile'>
+                    <NavDropdown.Item className='black-dropdown'>
                       Profile
                     </NavDropdown.Item>
                   </LinkContainer>
+                  {userInfo && userInfo.isSeller && (
+                    <LinkContainer to='/upload-property'>
+                      <NavDropdown.Item className='black-dropdown'>
+                        Upload Property
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                  )}
                   <NavDropdown.Item
-                    className="black-dropdown"
+                    className='black-dropdown'
                     onClick={logoutHandler}
                   >
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
-                <LinkContainer to="/login">
+                <LinkContainer to='/login'>
                   <Nav.Link>
-                    <i className="fas fa-user"></i> Sign In
+                    <i className='fas fa-user'></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
               )}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminmenu">
-                  <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item className="black-dropdown">
+                <NavDropdown title='Admin' id='adminmenu'>
+                  <LinkContainer to='/admin/userlist'>
+                    <NavDropdown.Item className='black-dropdown'>
                       Users
                     </NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item className="black-dropdown">
+                  <LinkContainer to='/admin/productlist'>
+                    <NavDropdown.Item className='black-dropdown'>
                       Products
                     </NavDropdown.Item>
                   </LinkContainer>
-                  <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item className="black-dropdown">
+                  <LinkContainer to='/admin/orderlist'>
+                    <NavDropdown.Item className='black-dropdown'>
                       Orders
                     </NavDropdown.Item>
                   </LinkContainer>

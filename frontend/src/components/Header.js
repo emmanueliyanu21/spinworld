@@ -42,13 +42,13 @@ const Header = () => {
                       Profile
                     </NavDropdown.Item>
                   </LinkContainer>
-                  {userInfo && userInfo.isSeller && (
-                    <LinkContainer to='/upload-property'>
-                      <NavDropdown.Item className='black-dropdown'>
-                        Upload Property
-                      </NavDropdown.Item>
-                    </LinkContainer>
-                  )}
+
+                  <LinkContainer to='/upload-property'>
+                    <NavDropdown.Item className='black-dropdown'>
+                      Dashboard
+                    </NavDropdown.Item>
+                  </LinkContainer>
+
                   <NavDropdown.Item
                     className='black-dropdown'
                     onClick={logoutHandler}
@@ -65,6 +65,11 @@ const Header = () => {
               )}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Admin' id='adminmenu'>
+                  <LinkContainer to='/admindashbaord'>
+                    <NavDropdown.Item className='black-dropdown'>
+                      Dashboard
+                    </NavDropdown.Item>
+                  </LinkContainer>
                   <LinkContainer to='/admin/userlist'>
                     <NavDropdown.Item className='black-dropdown'>
                       Users

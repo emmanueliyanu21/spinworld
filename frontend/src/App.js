@@ -21,6 +21,9 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import PropertiesScreen from './screens/PropertiesScreen';
 import UploadPropertyScreen from './screens/UploadPropertyScreen';
+import MyDashboardScreen from './screens/MyDashboardScreen';
+import EditUserScreen from './screens/EditUserScreen';
+import AdminDashboardScreen from './screens/AdminDashboardScreen';
 
 function App() {
   return (
@@ -34,7 +37,9 @@ function App() {
       <Route path='/upload-property' component={UploadPropertyScreen} exact />
       <Route path='/product/:id' component={ProductScreen} />
       <Route path='/login' component={LoginScreen} />
+      <Route path='/edit-profile' component={EditUserScreen} exact />
       <Route path='/profile' component={ProfileScreen} />
+      <Route path='/dashboard' component={MyDashboardScreen} />
       <Route path='/placeorder' component={PlaceOrderScreen} />
       <Route path='/order/:id' component={OrderScreen} />
       <Route path='/register' component={RegisterScreen} />
@@ -51,6 +56,7 @@ function App() {
       />
       <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
       <Route path='/admin/orderlist' component={OrderListScreen} />
+      <Route path='/admindashbaord' component={AdminDashboardScreen} />
       <Footer />
     </Router>
   );

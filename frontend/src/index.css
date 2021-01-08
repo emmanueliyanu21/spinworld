@@ -105,3 +105,9 @@ h2 {
 .header-bk-color .black-dropdown {
   color: #000 !important;
 }
+
+.box {
+  height: 60px;
+  width: 60px;
+  background-color: #f58634;
+}

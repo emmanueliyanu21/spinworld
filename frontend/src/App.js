@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Container } from "react-bootstrap";
 import Header from "./components/Header";
 import NavbarHeader from "./components/Navbar";
 import LogoHeader from "./components/LogoHeader";
@@ -26,26 +27,28 @@ function App() {
       <Header />
       <LogoHeader />
       <NavbarHeader />
-      <Route path="/" component={HomeScreen} exact />
-      <Route path="/product/:id" component={ProductScreen} />
-      <Route path="/login" component={LoginScreen} />
-      <Route path="/profile" component={ProfileScreen} />
-      <Route path="/placeorder" component={PlaceOrderScreen} />
-      <Route path="/order/:id" component={OrderScreen} />
-      <Route path="/register" component={RegisterScreen} />
-      <Route path="/payment" component={PaymentScreen} />
-      <Route path="/shipping" component={ShippingScreen} />
-      <Route path="/cart/:id?" component={CartScreen} />
-      <Route path="/admin/userlist" component={UserListScreen} />
-      <Route path="/admin/user/:id/edit" component={UserEditScreen} />
-      <Route path="/admin/productlist" component={ProductListScreen} exact />
-      <Route
-        path="/admin/productlist/:pageNumber"
-        component={ProductListScreen}
-        exact
-      />
-      <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
-      <Route path="/admin/orderlist" component={OrderListScreen} />
+      <Container>
+        <Route path="/" component={HomeScreen} exact />
+        <Route path="/product/:id" component={ProductScreen} />
+        <Route path="/login" component={LoginScreen} />
+        <Route path="/profile" component={ProfileScreen} />
+        <Route path="/placeorder" component={PlaceOrderScreen} />
+        <Route path="/order/:id" component={OrderScreen} />
+        <Route path="/register" component={RegisterScreen} />
+        <Route path="/payment" component={PaymentScreen} />
+        <Route path="/shipping" component={ShippingScreen} />
+        <Route path="/cart/:id?" component={CartScreen} />
+        <Route path="/admin/userlist" component={UserListScreen} />
+        <Route path="/admin/user/:id/edit" component={UserEditScreen} />
+        <Route path="/admin/productlist" component={ProductListScreen} exact />
+        <Route
+          path="/admin/productlist/:pageNumber"
+          component={ProductListScreen}
+          exact
+        />
+        <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
+        <Route path="/admin/orderlist" component={OrderListScreen} />
+      </Container>
       <Footer />
     </Router>
   );

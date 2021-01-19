@@ -8,7 +8,7 @@ const ClientDashBoard = () => {
     <Card>
       <Link
         className={`${location.pathname === '/dashboard' ? 'bg-info' : ''}`}
-        to='/dashboard'
+        to='#'
       >
         <Card.Body className='border-bottom'>
           <Card.Text>
@@ -19,9 +19,9 @@ const ClientDashBoard = () => {
       </Link>
       <Link
         className={`${
-          location.pathname === '/upload-property' ? 'bg-info' : ''
+          location.pathname === '/property-dashboard' ? 'bg-info' : ''
         }`}
-        to='/upload-property'
+        to='/property-dashboard'
       >
         <Card.Body className='border-bottom'>
           <Card.Text>
@@ -36,7 +36,7 @@ const ClientDashBoard = () => {
             ? 'bg-info'
             : ''
         }`}
-        to='/profile'
+        to='#'
       >
         <Card.Body className='border-bottom'>
           <Card.Text>
@@ -44,28 +44,28 @@ const ClientDashBoard = () => {
           </Card.Text>
         </Card.Body>
       </Link>
-      <Link>
+      <Link to='#'>
         <Card.Body className='border-bottom'>
           <Card.Text>
             <i class='fas fa-download pr-3'></i>Downloads
           </Card.Text>
         </Card.Body>
       </Link>
-      <Link>
+      <Link to='#'>
         <Card.Body className='border-bottom'>
           <Card.Text>
             <i className='fas fa-shopping-cart pr-3'></i>Cart
           </Card.Text>
         </Card.Body>
       </Link>
-      <Link>
+      <Link to='#'>
         <Card.Body className='border-bottom'>
           <Card.Text>
             <i className='fas fa-info-circle pr-3'></i>Inquiries
           </Card.Text>
         </Card.Body>
       </Link>
-      <Link>
+      <Link to='#'>
         <Card.Body className='border-bottom'>
           <Card.Text>
             <i className='fas fa-user pr-3'></i>Account Profile

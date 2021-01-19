@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Property from '../models/propertyModel.js';
+import User from '../models/userModel.js';
 
 const getProperties = asyncHandler(async (req, res) => {
   const type = req.query.type
@@ -35,7 +36,7 @@ const getProperties = asyncHandler(async (req, res) => {
     ...bedroom,
     ...serviced,
     ...category,
-  });
+  }).populate('user', 'id name');
 
   res.json(properties);
 });
@@ -72,4 +73,19 @@ const createProperty = asyncHandler(async (req, res) => {
   const createdProperty = await property.save();
   res.json(createdProperty);
 });
-export { getProperties, createProperty };
+
+const updateProperty = asyncHandler(async (req, res) => {});
+
+const deleteProperty = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id);
+  const property = await Property.findById(req.params.id);
+  if (!property) return res.json({ message: 'property not found' });
+  console.log(!user.isAdmin);
+  if (property.user.toString() === user._id.toString() || user.isAdmin) {
+    await property.deleteOne();
+    return res.json({ success: true });
+  } else {
+    return res.status(401).json({ message: 'not authorized' });
+  }
+});
+export { getProperties, createProperty, updateProperty, deleteProperty };

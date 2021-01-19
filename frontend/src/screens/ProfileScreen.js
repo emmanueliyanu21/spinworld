@@ -1,43 +1,34 @@
 import React, { useState, useEffect } from 'react';
 // import { Link } from "react-router-dom";
-import {
-  Form,
-  Button,
-  Row,
-  Col,
-  Container,
-  Table,
-  Card,
-} from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Row, Col, Container, Card } from 'react-bootstrap';
+
 import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
+
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { Link } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
 
-const ProfileScreen = ({ location, history }) => {
+const ProfileScreen = ({ history }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setconfirmPassword] = useState('');
-  const [message, setMessage] = useState(null);
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setconfirmPassword] = useState('');
+  // const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
   const userDetails = useSelector(state => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const { user } = userDetails;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userUpdateProfile = useSelector(state => state.userUpdateProfile);
-  const { success } = userUpdateProfile;
+  // const userUpdateProfile = useSelector(state => state.userUpdateProfile);
+  // const { success } = userUpdateProfile;
 
-  const orderListMy = useSelector(state => state.orderListMy);
-  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+  // const orderListMy = useSelector(state => state.orderListMy);
+  // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   useEffect(() => {
     if (!userInfo) {
@@ -53,14 +44,14 @@ const ProfileScreen = ({ location, history }) => {
     }
   }, [dispatch, history, userInfo, user]);
 
-  const submitHandler = e => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Password do not match');
-    } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
-    }
-  };
+  // const submitHandler = e => {
+  //   e.preventDefault();
+  //   if (password !== confirmPassword) {
+  //     setMessage('Password do not match');
+  //   } else {
+  //     dispatch(updateUserProfile({ id: user._id, name, email, password }));
+  //   }
+  // };
   return (
     <Container>
       {/* <Row>
@@ -183,10 +174,13 @@ const ProfileScreen = ({ location, history }) => {
 
           <Card>
             <Card.Body className='border-bottom'>
-              <h5>Full Name:</h5> {user.name}
+              <p>{`Full Name :   ${user.name}`}</p>
             </Card.Body>
             <Card.Body className='border-bottom'>Username:</Card.Body>
-            <Card.Body className='border-bottom'>EmailAddress:</Card.Body>
+            <Card.Body className='border-bottom'>
+              {' '}
+              <p>{`Email Address :   ${user.email}`}</p>
+            </Card.Body>
             <Card.Body className='border-bottom'>Country:</Card.Body>
             <Card.Body className='border-bottom'>City:</Card.Body>
             <Card.Body className='border-bottom'>Phone Number:</Card.Body>

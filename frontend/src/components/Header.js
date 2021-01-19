@@ -1,10 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { logout } from '../actions/userActions';
 
 const Header = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const userLogin = useSelector(state => state.userLogin);
@@ -13,6 +15,15 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(logout());
   };
+
+  if (
+    location.pathname === '/admin' ||
+    location.pathname === '/admin/property' ||
+    location.pathname === '/admin/customer'
+  ) {
+    return null;
+  }
+
   return (
     <div>
       <Navbar expand='lg' className='header-bk-color' collapseOnSelect>
@@ -43,7 +54,7 @@ const Header = () => {
                     </NavDropdown.Item>
                   </LinkContainer>
 
-                  <LinkContainer to='/upload-property'>
+                  <LinkContainer to='/property-dashboard'>
                     <NavDropdown.Item className='black-dropdown'>
                       Dashboard
                     </NavDropdown.Item>
@@ -65,7 +76,7 @@ const Header = () => {
               )}
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title='Admin' id='adminmenu'>
-                  <LinkContainer to='/admindashbaord'>
+                  <LinkContainer to='/admin'>
                     <NavDropdown.Item className='black-dropdown'>
                       Dashboard
                     </NavDropdown.Item>

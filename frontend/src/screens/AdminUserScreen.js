@@ -93,7 +93,6 @@ const AdminUserScreen = () => {
                             </th>
                             <th
                               className='sorting'
-                              tabIndex='0'
                               aria-controls='dataTable'
                               rowSpan='1'
                               colSpan='1'

@@ -64,6 +64,7 @@ export const createProperty = postData => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    console.log(error.response);
     const message =
       error.response && error.response.data.message
         ? error.response.data.message

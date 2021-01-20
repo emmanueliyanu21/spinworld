@@ -32,6 +32,7 @@ import {
 
 import {
   propertyCreateReducer,
+  propertyDeleteReducer,
   propertyListReducer,
 } from './reducers/propertyReducer';
 const reducer = combineReducers({
@@ -58,6 +59,7 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   propertyList: propertyListReducer,
   propertyCreate: propertyCreateReducer,
+  propertyDelete: propertyDeleteReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

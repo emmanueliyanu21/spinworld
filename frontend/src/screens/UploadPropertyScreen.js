@@ -13,12 +13,12 @@ const UploadPropertyScreen = ({ history }) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
-  const [type, setType] = useState('');
+  const [type, setType] = useState('land');
   const [room, setRoom] = useState('');
   const [bathroom, setBathroom] = useState('');
   const [toilet, setToilet] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('rent');
   const [geocode, setGeocode] = useState('');
   const [show, setShow] = useState(false);
 
@@ -28,6 +28,14 @@ const UploadPropertyScreen = ({ history }) => {
   const { error: errorCreate, loading: loadingCreate, success } = useSelector(
     state => state.propertyCreate
   );
+
+  const userLogin = useSelector(state => state.userLogin);
+  const { userInfo } = userLogin;
+  useEffect(() => {
+    if (!userInfo) {
+      history.push('/login');
+    }
+  }, [history, userInfo]);
 
   useEffect(() => {
     dispatch(listProperties());
@@ -47,6 +55,12 @@ const UploadPropertyScreen = ({ history }) => {
       })
     );
     setShow(false);
+    setTitle('');
+    setPrice('');
+    setRoom('');
+    setBathroom('');
+    setToilet('');
+    setDescription('');
   };
   const onChangeHandler = e => {
     setGeocode(e.target.value);

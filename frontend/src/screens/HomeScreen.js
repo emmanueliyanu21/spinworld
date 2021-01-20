@@ -17,44 +17,30 @@ const HomeScreen = () => {
     dispatch(listProducts());
   }, [dispatch]);
 
-  // setTimeout(() => {
-  //   setShow(true);
-  // }, 2500);
+  useEffect(() => {
+    setTimeout(() => {
+      setShow(true);
+    }, 2500);
+  }, []);
+
   return (
     <>
-      <Modal show={show} centered>
+      <Modal show={show} centered onHide={() => setShow(false)}>
         <Modal.Body>
           <Row>
             <Col>
-              <Link>
-                <div className='box'></div>
+              <Link to='/properties'>
+                <i class='fas fa-house-user fa-3x'></i>
               </Link>
             </Col>
             <Col>
               <Link>
-                <div className='box'></div>
+                <i class='fas fa-truck-moving fa-3x'></i>
               </Link>
             </Col>
             <Col>
               <Link>
-                <div className='box'></div>
-              </Link>
-            </Col>
-          </Row>
-          <Row className='mt-4'>
-            <Col>
-              <Link>
-                <div className='box'></div>
-              </Link>
-            </Col>
-            <Col>
-              <Link>
-                <div className='box'></div>
-              </Link>
-            </Col>
-            <Col>
-              <Link>
-                <div className='box'></div>
+                <i class='fas fa-palette fa-3x'></i>
               </Link>
             </Col>
           </Row>

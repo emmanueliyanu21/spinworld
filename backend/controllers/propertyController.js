@@ -58,6 +58,8 @@ const createProperty = asyncHandler(async (req, res) => {
     location,
     longitude,
     latitude,
+    address,
+    garage,
   } = req.body;
   const property = new Property({
     user: req.user._id,
@@ -73,6 +75,8 @@ const createProperty = asyncHandler(async (req, res) => {
     location,
     longitude,
     latitude,
+    address,
+    hasGarage: garage,
   });
   const createdProperty = await property.save();
   res.json(createdProperty);

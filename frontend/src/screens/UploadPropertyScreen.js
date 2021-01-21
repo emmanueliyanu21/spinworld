@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
-import Geocode from 'react-geocode';
+
 import { Form, Button, Row, Col, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
+import GooglePlacesAutocomplete, {
+  getLatLng,
+  geocodeByAddress,
+} from 'react-google-places-autocomplete';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-// import FormContainer from '../components/FormContainer';
 import { createProperty, listProperties } from '../actions/propertyAction';
-// import { CREATE_PROPERTY_RESET } from '../constants/propertyConstant';
 import ClientDashBoard from '../components/ClientDashBoard';
 const UploadPropertyScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -19,8 +20,11 @@ const UploadPropertyScreen = ({ history }) => {
   const [toilet, setToilet] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('rent');
-  const [geocode, setGeocode] = useState('');
   const [show, setShow] = useState(false);
+  const [address, setAddress] = useState('');
+  const [latitude, setLatittude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [garage, setGarage] = useState(false);
 
   const { error, loading, properties } = useSelector(
     state => state.propertyList
@@ -52,6 +56,10 @@ const UploadPropertyScreen = ({ history }) => {
         toilet,
         description,
         category,
+        address,
+        latitude,
+        longitude,
+        garage,
       })
     );
     setShow(false);
@@ -62,17 +70,15 @@ const UploadPropertyScreen = ({ history }) => {
     setToilet('');
     setDescription('');
   };
-  const onChangeHandler = e => {
-    setGeocode(e.target.value);
-    Geocode.fromAddress(geocode).then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
-      },
-      error => {
-        console.error(error);
-      }
-    );
+  const onChangeHandler = value => {
+    setAddress(value.label);
+    geocodeByAddress(value.label)
+      .then(results => getLatLng(results[0]))
+      .then(res => {
+        console.log(res);
+        setLatittude(res.lat);
+        setLongitude(res.lng);
+      });
   };
 
   return (
@@ -131,19 +137,33 @@ const UploadPropertyScreen = ({ history }) => {
                   value={type}
                   onChange={e => setType(e.target.value)}
                 >
-                  <option value='house'>land</option>
+                  <option value='land'>land</option>
                   <option value='flat'>flat</option>
                   <option value='house'>house</option>
                 </Form.Control>
-                <Form.Group controlId='Address'>
-                  <Form.Label>Address</Form.Label>
-                  <Form.Control
-                    type='text'
-                    placeholder='Enter Address'
-                    value={geocode}
-                    onChange={onChangeHandler}
-                  ></Form.Control>
+              </Form.Group>
+              {(type === 'house' || type === 'flat') && (
+                <Form.Group className='mt-4'>
+                  <Form.Check
+                    type='checkbox'
+                    id='garage'
+                    label='Select if property has garage'
+                    checked={garage}
+                    onChange={() => {
+                      setGarage(!garage);
+                    }}
+                  />
                 </Form.Group>
+              )}
+
+              <Form.Group controlId='Address' className='mt-4'>
+                <Form.Label>Address</Form.Label>
+                <GooglePlacesAutocomplete
+                  apiKey='AIzaSyCxxJCkw3wokAorMMsWOXVbTPAqGt2bgYE'
+                  selectProps={{
+                    onChange: onChangeHandler,
+                  }}
+                />
               </Form.Group>
               <Form.Group controlId='price'>
                 <Form.Label>Price</Form.Label>

@@ -26,6 +26,7 @@ import EditUserScreen from './screens/EditUserScreen';
 import AdminProperty from './screens/AdminProperty';
 import AdminHomeScreen from './screens/AdminHomeScreen';
 import AdminUserScreen from './screens/AdminUserScreen';
+import PropertyScreen from './screens/PropertyScreen';
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
       <NavbarHeader />
       <Route path='/' component={HomeScreen} exact />
       <Route path='/properties' component={PropertiesScreen} exact />
-      <Route path='/properties:category' component={PropertiesScreen} exact />
+      <Route path='/property:id' component={PropertyScreen} exact />
       <Route
         path='/property-dashboard'
         component={UploadPropertyScreen}

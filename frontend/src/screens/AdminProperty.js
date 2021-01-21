@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Container,
-  Form,
-  Modal,
-  Row,
-} from 'react-bootstrap';
-import Geocode from 'react-geocode';
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
+import GooglePlacesAutocomplete, {
+  getLatLng,
+  geocodeByAddress,
+} from 'react-google-places-autocomplete';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   listProperties,
   deleteProperty,
   createProperty,
 } from '../actions/propertyAction';
-import { Link } from 'react-router-dom';
+
 import AdminSideNav from '../components/AdminSideNav';
 
-const Admin = () => {
+const AdminProperty = () => {
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState('');
   const [type, setType] = useState('land');
@@ -27,8 +22,11 @@ const Admin = () => {
   const [toilet, setToilet] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('rent');
-  const [geocode, setGeocode] = useState('');
   const [show, setShow] = useState(false);
+  const [address, setAddress] = useState('');
+  const [latitude, setLatittude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [garage, setGarage] = useState(false);
   const dispatch = useDispatch();
 
   const { properties } = useSelector(state => state.propertyList);
@@ -62,6 +60,10 @@ const Admin = () => {
         toilet,
         description,
         category,
+        address,
+        latitude,
+        longitude,
+        garage,
       })
     );
     setShow(false);
@@ -72,17 +74,15 @@ const Admin = () => {
     setToilet('');
     setDescription('');
   };
-  const onChangeHandler = e => {
-    setGeocode(e.target.value);
-    Geocode.fromAddress(geocode).then(
-      response => {
-        const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
-      },
-      error => {
-        console.error(error);
-      }
-    );
+  const onChangeHandler = value => {
+    setAddress(value.label);
+    geocodeByAddress(value.label)
+      .then(results => getLatLng(results[0]))
+      .then(res => {
+        console.log(res);
+        setLatittude(res.lat);
+        setLongitude(res.lng);
+      });
   };
   return (
     <>
@@ -124,19 +124,32 @@ const Admin = () => {
                 value={type}
                 onChange={e => setType(e.target.value)}
               >
-                <option value='house'>land</option>
+                <option value='land'>land</option>
                 <option value='flat'>flat</option>
                 <option value='house'>house</option>
               </Form.Control>
-              <Form.Group controlId='Address'>
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter Address'
-                  value={geocode}
-                  onChange={onChangeHandler}
-                ></Form.Control>
+            </Form.Group>
+            {(type === 'house' || type === 'flat') && (
+              <Form.Group className='mt-4'>
+                <Form.Check
+                  type='checkbox'
+                  id='garage'
+                  label='Select if property has garage'
+                  checked={garage}
+                  onChange={() => {
+                    setGarage(!garage);
+                  }}
+                />
               </Form.Group>
+            )}
+            <Form.Group controlId='Address'>
+              <Form.Label>Address</Form.Label>
+              <GooglePlacesAutocomplete
+                apiKey='AIzaSyCxxJCkw3wokAorMMsWOXVbTPAqGt2bgYE'
+                selectProps={{
+                  onChange: onChangeHandler,
+                }}
+              />
             </Form.Group>
             <Form.Group controlId='price'>
               <Form.Label>Price</Form.Label>
@@ -332,4 +345,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminProperty;

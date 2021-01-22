@@ -21,6 +21,12 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import PropertiesScreen from './screens/PropertiesScreen';
 import UploadPropertyScreen from './screens/UploadPropertyScreen';
+import MyDashboardScreen from './screens/MyDashboardScreen';
+import EditUserScreen from './screens/EditUserScreen';
+import AdminProperty from './screens/AdminProperty';
+import AdminHomeScreen from './screens/AdminHomeScreen';
+import AdminUserScreen from './screens/AdminUserScreen';
+import PropertyScreen from './screens/PropertyScreen';
 
 function App() {
   return (
@@ -30,11 +36,17 @@ function App() {
       <NavbarHeader />
       <Route path='/' component={HomeScreen} exact />
       <Route path='/properties' component={PropertiesScreen} exact />
-      <Route path='/properties:category' component={PropertiesScreen} exact />
-      <Route path='/upload-property' component={UploadPropertyScreen} exact />
+      <Route path='/property/:id' component={PropertyScreen} exact />
+      <Route
+        path='/property-dashboard'
+        component={UploadPropertyScreen}
+        exact
+      />
       <Route path='/product/:id' component={ProductScreen} />
       <Route path='/login' component={LoginScreen} />
+      <Route path='/edit-profile' component={EditUserScreen} exact />
       <Route path='/profile' component={ProfileScreen} />
+      <Route path='/dashboard' component={MyDashboardScreen} />
       <Route path='/placeorder' component={PlaceOrderScreen} />
       <Route path='/order/:id' component={OrderScreen} />
       <Route path='/register' component={RegisterScreen} />
@@ -51,7 +63,12 @@ function App() {
       />
       <Route path='/admin/product/:id/edit' component={ProductEditScreen} />
       <Route path='/admin/orderlist' component={OrderListScreen} />
+
       <Footer />
+
+      <Route path='/admin/property' component={AdminProperty} exact />
+      <Route path='/admin/customer' component={AdminUserScreen} exact />
+      <Route path='/admin' component={AdminHomeScreen} exact />
     </Router>
   );
 }

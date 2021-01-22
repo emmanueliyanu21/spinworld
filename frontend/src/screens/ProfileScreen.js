@@ -1,40 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // import { Link } from "react-router-dom";
-import { Form, Button, Row, Col, Container, Table } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
-import { listMyOrders } from "../actions/orderActions";
+import { Row, Col, Container, Card } from 'react-bootstrap';
 
-const ProfileScreen = ({ location, history }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setconfirmPassword] = useState("");
-  const [message, setMessage] = useState(null);
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { listMyOrders } from '../actions/orderActions';
+import { Link } from 'react-router-dom';
+import Dashboard from '../components/Dashboard';
+
+const ProfileScreen = ({ history }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setconfirmPassword] = useState('');
+  // const [message, setMessage] = useState(null);
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const userDetails = useSelector(state => state.userDetails);
+  const { user } = userDetails;
 
-  const userLogin = useSelector((state) => state.userLogin);
+  const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
 
-  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
-  const { success } = userUpdateProfile;
+  // const userUpdateProfile = useSelector(state => state.userUpdateProfile);
+  // const { success } = userUpdateProfile;
 
-  const orderListMy = useSelector((state) => state.orderListMy);
-  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+  // const orderListMy = useSelector(state => state.orderListMy);
+  // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
 
   useEffect(() => {
     if (!userInfo) {
-      history.push("/login");
+      history.push('/login');
     } else {
       if (!user.name) {
-        dispatch(getUserDetails("profile"));
+        dispatch(getUserDetails('profile'));
         dispatch(listMyOrders());
       } else {
         setName(user.name);
@@ -43,17 +44,17 @@ const ProfileScreen = ({ location, history }) => {
     }
   }, [dispatch, history, userInfo, user]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage("Password do not match");
-    } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
-    }
-  };
+  // const submitHandler = e => {
+  //   e.preventDefault();
+  //   if (password !== confirmPassword) {
+  //     setMessage('Password do not match');
+  //   } else {
+  //     dispatch(updateUserProfile({ id: user._id, name, email, password }));
+  //   }
+  // };
   return (
     <Container>
-      <Row>
+      {/* <Row>
         <Col md={3}>
           <h2>User Profile</h2>
           {message && <Message variant="danger">{message}</Message>}
@@ -160,6 +161,30 @@ const ProfileScreen = ({ location, history }) => {
               </tbody>
             </Table>
           )}
+        </Col>
+      </Row> */}
+      <Row className='mt-4'>
+        <Dashboard />
+        <Col md={8}>
+          <Link to={`/edit-profile`} className='btn btn-info float-right'>
+            Edit
+          </Link>
+          <h1>My Profile</h1>
+          <p>Home / Profile</p>
+
+          <Card>
+            <Card.Body className='border-bottom'>
+              <p>{`Full Name :   ${user.name}`}</p>
+            </Card.Body>
+            <Card.Body className='border-bottom'>Username:</Card.Body>
+            <Card.Body className='border-bottom'>
+              {' '}
+              <p>{`Email Address :   ${user.email}`}</p>
+            </Card.Body>
+            <Card.Body className='border-bottom'>Country:</Card.Body>
+            <Card.Body className='border-bottom'>City:</Card.Body>
+            <Card.Body className='border-bottom'>Phone Number:</Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

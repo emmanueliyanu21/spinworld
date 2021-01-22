@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { listProperties } from '../actions/propertyAction';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -24,6 +25,11 @@ const PropertiesScreen = ({ match }) => {
     e.preventDefault();
     console.log(bedroom);
     dispatch(listProperties(category, type, bedroom, furnished, serviced));
+    setCategory('');
+    setType('');
+    setBedroom('');
+    setFurnished('');
+    setServiced('');
   };
   return (
     <Container>
@@ -36,6 +42,12 @@ const PropertiesScreen = ({ match }) => {
         <Row>
           <Col md={8}>
             <Row>
+              {properties && properties.length === 0 && (
+                <Message variant='danger'>
+                  No property match your search criteria{' '}
+                  <Link to='/properties'>Go back</Link>
+                </Message>
+              )}
               {properties &&
                 properties.map(property => (
                   <Col key={property._id} sm={12} md={6} lg={4} xl={4}>

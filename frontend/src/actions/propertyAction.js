@@ -10,6 +10,9 @@ import {
   PROPERTY_DELETE_REQUEST,
   PROPERTY_DELETE_SUCCESS,
   PROPERTY_DELETE_FAIL,
+  PROPERTY_SINGLE_REQUEST,
+  PROPERTY_SINGLE_SUCCESS,
+  PROPERTY_SINGLE_FAIL,
 } from '../constants/propertyConstant';
 
 export const listProperties = (
@@ -106,6 +109,31 @@ export const deleteProperty = id => async (dispatch, getState) => {
 
     dispatch({
       type: PROPERTY_DELETE_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const getProperty = id => async dispatch => {
+  try {
+    dispatch({
+      type: PROPERTY_SINGLE_REQUEST,
+    });
+
+    const { data } = await axios.get(`/api/property/${id}`);
+
+    dispatch({
+      type: PROPERTY_SINGLE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+    dispatch({
+      type: PROPERTY_SINGLE_FAIL,
       payload: message,
     });
   }

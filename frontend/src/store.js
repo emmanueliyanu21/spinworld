@@ -34,6 +34,7 @@ import {
   propertyCreateReducer,
   propertyDeleteReducer,
   propertyListReducer,
+  propertySingleReducer,
 } from './reducers/propertyReducer';
 const reducer = combineReducers({
   productList: productListReducer,
@@ -60,6 +61,7 @@ const reducer = combineReducers({
   propertyList: propertyListReducer,
   propertyCreate: propertyCreateReducer,
   propertyDelete: propertyDeleteReducer,
+  propertySingle: propertySingleReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

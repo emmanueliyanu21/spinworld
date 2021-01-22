@@ -45,6 +45,12 @@ const getUserProperty = asyncHandler(async (req, res) => {
   const property = await Property.find({ user: req.user._id });
 });
 
+const getPropertyById = asyncHandler(async (req, res) => {
+  const property = await Property.findById(req.params.id);
+  if (!property) return res.json({ message: 'property not found' });
+  res.json(property);
+});
+
 const createProperty = asyncHandler(async (req, res) => {
   const {
     title,
@@ -95,4 +101,10 @@ const deleteProperty = asyncHandler(async (req, res) => {
     return res.status(401).json({ message: 'not authorized' });
   }
 });
-export { getProperties, createProperty, updateProperty, deleteProperty };
+export {
+  getProperties,
+  createProperty,
+  updateProperty,
+  deleteProperty,
+  getPropertyById,
+};

@@ -9,6 +9,9 @@ import {
   PROPERTY_DELETE_REQUEST,
   PROPERTY_DELETE_SUCCESS,
   PROPERTY_DELETE_FAIL,
+  PROPERTY_SINGLE_REQUEST,
+  PROPERTY_SINGLE_SUCCESS,
+  PROPERTY_SINGLE_FAIL,
 } from '../constants/propertyConstant';
 
 export const propertyListReducer = (state = { products: [] }, action) => {
@@ -46,6 +49,19 @@ export const propertyDeleteReducer = (state = {}, action) => {
     case PROPERTY_DELETE_SUCCESS:
       return { loading: false, success: true };
     case PROPERTY_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const propertySingleReducer = (state = {}, action) => {
+  switch (action.type) {
+    case PROPERTY_SINGLE_REQUEST:
+      return { loading: true };
+    case PROPERTY_SINGLE_SUCCESS:
+      return { loading: false, property: action.payload };
+    case PROPERTY_SINGLE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

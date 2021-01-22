@@ -36,7 +36,7 @@ function App() {
       <NavbarHeader />
       <Route path='/' component={HomeScreen} exact />
       <Route path='/properties' component={PropertiesScreen} exact />
-      <Route path='/property:id' component={PropertyScreen} exact />
+      <Route path='/property/:id' component={PropertyScreen} exact />
       <Route
         path='/property-dashboard'
         component={UploadPropertyScreen}

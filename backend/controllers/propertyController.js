@@ -15,6 +15,7 @@ const getProperties = asyncHandler(async (req, res) => {
       }
     : {};
 
+    
   const serviced = req.query.serviced
     ? {
         servicing: req.query.serviced,

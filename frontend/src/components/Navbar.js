@@ -9,12 +9,12 @@ const NavbarHeader = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="#home">HOME</Nav.Link>
-              <Nav.Link href="#link">LAND</Nav.Link>
-              <Nav.Link href="#home">MARKETER</Nav.Link>
-              <Nav.Link href="#link">DESIGNS</Nav.Link>
-              <Nav.Link href="#link">DRIVER</Nav.Link>
-              <Nav.Link href="#link">BLOG</Nav.Link>
+              <Nav.Link href="/">HOME</Nav.Link>
+              <Nav.Link href="/">LAND</Nav.Link>
+              <Nav.Link href="/">MARKETER</Nav.Link>
+              <Nav.Link href="/">DESIGNS</Nav.Link>
+              <Nav.Link href="/">DRIVER</Nav.Link>
+              <Nav.Link href="/">BLOG</Nav.Link>
             </Nav>
             <Form inline>
               <FormControl

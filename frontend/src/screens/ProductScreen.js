@@ -8,7 +8,7 @@ import {
 import Rating from "../components/Rating";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
+// import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
 
 import {
   Row,
@@ -152,7 +152,7 @@ const ProductScreen = ({ history, match }) => {
             </Col>
           </Row>
           <Row>
-            <Col md={6}>
+            {/* <Col md={6}>
               <h2>Reviews</h2>
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
               <ListGroup variant="flush">
@@ -216,7 +216,7 @@ const ProductScreen = ({ history, match }) => {
                   )}
                 </ListGroup.Item>
               </ListGroup>
-            </Col>
+            </Col> */}
           </Row>
         </>
       )}

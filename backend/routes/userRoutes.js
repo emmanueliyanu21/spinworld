@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 const router = express.Router();
 import {
   authUser,
@@ -9,23 +9,25 @@ import {
   deleteUser,
   getUserById,
   updateUser,
-} from "../controllers/userController.js";
-import { protect, admin } from "../middleware/authMiddleware.js";
+  getDrivers,
+} from '../controllers/userController.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
 // @desc Fetch all products
 // @route GET /api/products
 // @access Fetch all products
 
-router.route("/").post(registerUser).get(protect, admin, getUsers);
-router.post("/login", authUser);
+router.route('/').post(registerUser).get(protect, admin, getUsers);
+router.post('/login', authUser);
 router
-  .route("/profile")
+  .route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 router
-  .route("/:id")
+  .route('/:id')
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
+router.route('/get/drivers').get(protect, admin, getDrivers);
 
 export default router;

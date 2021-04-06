@@ -28,13 +28,13 @@ const AdminSideNav = () => {
       script.async = true;
       document.body.appendChild(script);
     };
-    const cosScript = async () => {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `../utils/toggleSideNav.js`;
-      script.async = true;
-      document.body.appendChild(script);
-    };
+    // const cosScript = async () => {
+    //   const script = document.createElement('script')
+    //   script.type = 'text/javascript'
+    //   script.src = `../utils/toggleSideNav.js`
+    //   script.async = true
+    //   document.body.appendChild(script)
+    // }
     // cosScript();
     bootScript();
     jqueryScript();
@@ -63,8 +63,8 @@ const AdminSideNav = () => {
         <ul className='navbar-nav ml-auto '>
           <li className='nav-item dropdown'>
             <a
+              href='/admin'
               className='nav-link '
-              href='#'
               role='button'
               aria-haspopup='true'
               aria-expanded='false'
@@ -118,7 +118,12 @@ const AdminSideNav = () => {
                 </Link>
               </div>
               <div className='nav'>
-                <Link className='nav-link' href='index.html'>
+                <Link
+                  to='/admin/orders'
+                  className={`nav-link ${
+                    location.pathname === '/admin/orders' && 'bg-primary active'
+                  }`}
+                >
                   <div className='sb-nav-link-icon'>
                     <i className='fas fa-shopping-cart'></i>
                   </div>

@@ -32,11 +32,7 @@ const AdminProperty = () => {
   const { properties } = useSelector(state => state.propertyList);
   const { success } = useSelector(state => state.propertyDelete);
 
-  const {
-    error: errorCreate,
-    loading: loadingCreate,
-    success: successCreate,
-  } = useSelector(state => state.propertyCreate);
+  const { success: successCreate } = useSelector(state => state.propertyCreate);
 
   useEffect(() => {
     dispatch(listProperties());

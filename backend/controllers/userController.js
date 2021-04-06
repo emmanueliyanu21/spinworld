@@ -83,13 +83,26 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route PUT /api/users/login
 // @access Private
 const updateUserProfile = asyncHandler(async (req, res) => {
+  const {
+    name,
+    email,
+    password,
+    businessName,
+    businessNumber,
+    businessAddress,
+    category,
+  } = req.body;
   const user = await User.findById(req.user._id);
 
   if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    if (req.body.password) {
-      user.password = req.body.password;
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.businessName = businessName;
+    user.businessNumber = businessNumber;
+    user.businessAddress = businessAddress;
+    user.category = category;
+    if (password) {
+      user.password = password;
     }
 
     const updatedUser = await user.save();
@@ -100,6 +113,10 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       isSeller: updatedUser.isSeller,
+      businessName: updatedUser.businessName,
+      businessNumber: updatedUser.businessNumber,
+      businessAddress: updatedUser.businessAddress,
+      category: updatedUser.category,
       token: generateToken(updatedUser._id),
     });
   } else {
@@ -171,6 +188,20 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get user by ID
+// @route   GET /api/users/drivers
+// @access  Private/Admin
+const getDrivers = asyncHandler(async (req, res) => {
+  const user = await User.find({ category: 'driver' }).select('-password');
+
+  if (user.length > 0) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error('No driver found');
+  }
+});
+
 export {
   authUser,
   registerUser,
@@ -180,4 +211,5 @@ export {
   deleteUser,
   getUserById,
   updateUser,
+  getDrivers,
 };

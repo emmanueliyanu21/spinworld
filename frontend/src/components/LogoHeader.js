@@ -1,16 +1,17 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { useLocation } from 'react-router-dom';
+import React from 'react'
+import { Navbar, Nav, Container } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
+import { useLocation } from 'react-router-dom'
 
 const LogoHeader = () => {
-  const location = useLocation();
+  const location = useLocation()
   if (
     location.pathname === '/admin' ||
     location.pathname === '/admin/property' ||
-    location.pathname === '/admin/customer'
+    location.pathname === '/admin/customer' ||
+    location.pathname === '/admin/orders'
   ) {
-    return null;
+    return null
   }
   return (
     <div>
@@ -39,7 +40,7 @@ const LogoHeader = () => {
         </Container>
       </Navbar>
     </div>
-  );
-};
+  )
+}
 
-export default LogoHeader;
+export default LogoHeader

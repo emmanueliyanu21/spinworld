@@ -7,7 +7,6 @@ import GooglePlacesAutocomplete, {
   geocodeByAddress,
 } from 'react-google-places-autocomplete';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
 import { createProperty, listProperties } from '../actions/propertyAction';
 import ClientDashBoard from '../components/ClientDashBoard';
 const UploadPropertyScreen = ({ history }) => {
@@ -29,9 +28,7 @@ const UploadPropertyScreen = ({ history }) => {
   const { error, loading, properties } = useSelector(
     state => state.propertyList
   );
-  const { error: errorCreate, loading: loadingCreate, success } = useSelector(
-    state => state.propertyCreate
-  );
+  const { success } = useSelector(state => state.propertyCreate);
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;

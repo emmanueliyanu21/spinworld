@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-const userSchema = mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -28,6 +28,9 @@ const userSchema = mongoose.Schema(
     category: {
       type: String,
     },
+    businessName: String,
+    businessNumber: Number,
+    businessAddress: String,
   },
   {
     timestamps: true,

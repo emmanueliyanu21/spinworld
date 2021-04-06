@@ -4,7 +4,7 @@ import { Row, Col, Container, Card } from 'react-bootstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { getUserDetails } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
 import { Link } from 'react-router-dom';
 import Dashboard from '../components/Dashboard';
@@ -15,7 +15,7 @@ const ProfileScreen = ({ history }) => {
   // const [password, setPassword] = useState('');
   // const [confirmPassword, setconfirmPassword] = useState('');
   // const [message, setMessage] = useState(null);
-
+  console.log(name, email);
   const dispatch = useDispatch();
 
   const userDetails = useSelector(state => state.userDetails);

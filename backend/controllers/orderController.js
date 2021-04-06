@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
+import OrderTracking from '../models/orderTrackingModel.js';
 
 // @desc Create new order
 // @route POST /api/orders
@@ -118,6 +119,21 @@ const getOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
+const assignDriverToOrder = asyncHandler(async (req, res) => {
+  const { driver } = req.body;
+  const { id } = req.params;
+  const order = await Order.findById(id);
+  if (!order) {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+  const newOrderTracking = await OrderTracking.create({
+    orderId: order.id,
+    driver: driver,
+  });
+  res.json(newOrderTracking);
+});
+
 export {
   addOrderItems,
   getOrderById,
@@ -125,4 +141,5 @@ export {
   getMyOrders,
   getOrders,
   updateOrderToDelivered,
+  assignDriverToOrder,
 };

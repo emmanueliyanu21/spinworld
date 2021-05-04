@@ -12,6 +12,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    referralCode: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     password: {
       type: String,
       required: true,
@@ -40,6 +45,11 @@ const userSchema = new mongoose.Schema(
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+
+// userSchema.pre('save', function (next) {
+
+//   next();
+// });
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {

@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Form, Modal, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import {
   deliverOrder,
-  listOrders,
   orderAssignDriver,
+  orderDriver as orderDriverAction,
+  orderMarkDriverDelivered,
+  orderMarkDriverFailed,
 } from '../actions/orderActions';
-import AdminSideNav from '../components/AdminSideNav';
 import Loader from '../components/Loader';
+import ClientDashBoard from '../components/ClientDashBoard';
 
-const AdminOrderScreen = ({ history }) => {
+const DriverOrderScreen = ({ history }) => {
   const [show, setShow] = useState(false);
   const [drivers, setDrivers] = useState([]);
   const [driver, setDriver] = useState('');
   const dispatch = useDispatch();
 
-  const orderList = useSelector(state => state.orderList);
-  const { orders } = orderList;
-
-  const orderDeliver = useSelector(state => state.orderDeliver);
-  const { success: successDeliver } = orderDeliver;
+  const orderDriver = useSelector(state => state.orderDriver);
+  const { orders, success: successDriver } = orderDriver;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -29,30 +27,12 @@ const AdminOrderScreen = ({ history }) => {
   const { loading, success, error } = orderAssign;
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listOrders());
+    if (userInfo) {
+      dispatch(orderDriverAction());
     } else {
       history.push('/login');
     }
-  }, [dispatch, history, userInfo, successDeliver]);
-
-  const assignDriverHandler = async order => {
-    localStorage.removeItem('orderAssign');
-    localStorage.setItem('orderAssign', JSON.stringify(order));
-    setShow(true);
-    try {
-      const user = JSON.parse(localStorage.getItem('userInfo'));
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      };
-      const { data } = await axios.get('/api/users/get/drivers', config);
-      setDrivers(data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+  }, [dispatch, history, userInfo]);
 
   const assignHandler = async () => {
     const { _id } = JSON.parse(localStorage.getItem('orderAssign'));
@@ -62,7 +42,11 @@ const AdminOrderScreen = ({ history }) => {
   };
 
   const deliverHandler = order => {
-    dispatch(deliverOrder(order));
+    dispatch(orderMarkDriverDelivered(order._id));
+  };
+
+  const failHandler = order => {
+    dispatch(orderMarkDriverFailed(order._id));
   };
 
   return (
@@ -93,11 +77,11 @@ const AdminOrderScreen = ({ history }) => {
           </Form>
         </Card>
       </Modal>
-      <Row>
-        <Col md={2}>
-          <AdminSideNav />
+      <Row className='mt-4'>
+        <Col md={3}>
+          <ClientDashBoard />
         </Col>
-        <Col md={10}>
+        <Col md={9}>
           <div className='card mb-4'>
             <div className='card-header'></div>
             <div className='card-body'>
@@ -141,7 +125,7 @@ const AdminOrderScreen = ({ history }) => {
                               aria-label='Name: activate to sort column descending'
                               style={{ width: '115px' }}
                             >
-                              USER
+                              NAME
                             </th>
                             <th
                               className='sorting'
@@ -152,7 +136,7 @@ const AdminOrderScreen = ({ history }) => {
                               aria-label='Office: activate to sort column ascending'
                               style={{ width: '85px' }}
                             >
-                              DATE
+                              ADDRESS
                             </th>
                             <th
                               className='sorting'
@@ -163,91 +147,52 @@ const AdminOrderScreen = ({ history }) => {
                               aria-label='Age: activate to sort column ascending'
                               style={{ width: '31px' }}
                             >
-                              AMOUNT
-                            </th>
-                            <th
-                              className='sorting'
-                              tabIndex='0'
-                              aria-controls='dataTable'
-                              rowSpan='1'
-                              colSpan='1'
-                              aria-label='Age: activate to sort column ascending'
-                              style={{ width: '31px' }}
-                            >
-                              PAID
-                            </th>{' '}
-                            <th
-                              className='sorting'
-                              tabIndex='0'
-                              aria-controls='dataTable'
-                              rowSpan='1'
-                              colSpan='1'
-                              aria-label='Age: activate to sort column ascending'
-                              style={{ width: '31px' }}
-                            >
-                              DELIVERED
-                            </th>
-                            <th
-                              className='sorting'
-                              tabIndex='0'
-                              aria-controls='dataTable'
-                              rowSpan='1'
-                              colSpan='1'
-                              style={{ width: '31px' }}
-                            >
-                              ACTIONS
+                              STATUS
                             </th>
                           </tr>
                         </thead>
 
                         <tbody>
                           {orders &&
-                            orders.map((order, index) => (
-                              <tr key={order._id} role='row' className='even'>
-                                <td>{index + 1}</td>
-                                <td>{order.user.name}</td>
+                            orders.map((order, index) => {
+                              const {
+                                address,
+                                city,
+                              } = order.order.shippingAddress;
+                              return (
+                                <tr key={order._id} role='row' className='even'>
+                                  <td>{index + 1}</td>
+                                  <td>{order.order.user.name}</td>
 
-                                <td>{order.createdAt.substring(0, 10)}</td>
-                                <td>{`$${order.totalPrice}`}</td>
-                                <td>
-                                  {order.isPaid ? (
-                                    order.paidAt.substring(0, 10)
-                                  ) : (
-                                    <i
-                                      className='fas fa-times'
-                                      style={{ color: 'red' }}
-                                    ></i>
-                                  )}
-                                </td>
-                                <td>
-                                  {order.isDelivered ? (
-                                    order.deliveredAt.substring(0, 10)
-                                  ) : (
-                                    <i
-                                      className='fas fa-times'
-                                      style={{ color: 'red' }}
-                                    ></i>
-                                  )}
-                                </td>
-                                <td>
-                                  <div className='d-flex flex-row'>
-                                    <Button
-                                      onClick={() => assignDriverHandler(order)}
-                                      className='btn-success mr-2'
-                                    >
-                                      <i class='fas fa-truck mr-1'></i>
-                                      Assign driver
-                                    </Button>
-                                    <Button
-                                      onClick={() => deliverHandler(order)}
-                                    >
-                                      <i class='fas fa-truck-loading mr-1'></i>
-                                      Mark Delivered
-                                    </Button>
-                                  </div>
-                                </td>
-                              </tr>
-                            ))}
+                                  <td>{`${address}, ${city}`}</td>
+                                  <td>{order.orderStatus}</td>
+                                  <td>
+                                    <div className='d-flex flex-row'>
+                                      <Button
+                                        onClick={() => deliverHandler(order)}
+                                        className={`mr-2 btn-success ${
+                                          order.orderStatus === 'Delivered' &&
+                                          'disabled'
+                                        }`}
+                                      >
+                                        Mark Delivered
+                                      </Button>
+                                      <Button
+                                        onClick={() => failHandler(order)}
+                                        className={`${
+                                          (order.orderStatus === 'Failed' ||
+                                            order.orderStatus ===
+                                              'Delivered') &&
+                                          'disabled'
+                                        }`}
+                                      >
+                                        Mark Failed
+                                      </Button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                         </tbody>
                       </table>
                     </div>
@@ -262,4 +207,4 @@ const AdminOrderScreen = ({ history }) => {
   );
 };
 
-export default AdminOrderScreen;
+export default DriverOrderScreen;

@@ -1,27 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Row, Col, Container, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Product from '../components/Product';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { listProducts } from '../actions/productActions';
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
+  let query = new URLSearchParams(useLocation().search);
+  if (query.get('referralcode')) {
+    localStorage.setItem('referralcode', query.get('referralcode'));
+  }
+
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const productList = useSelector(state => state.productList);
+  const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShow(true);
-    }, 2500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShow(true);
+  //   }, 2500);
+  // }, []);
 
   return (
     <>
@@ -54,7 +59,7 @@ const HomeScreen = () => {
           <Message variant='danger'>{error}</Message>
         ) : (
           <Row>
-            {products.map(product => (
+            {products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product} />
               </Col>

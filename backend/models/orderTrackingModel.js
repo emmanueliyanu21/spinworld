@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const orderTrackingSchema = new mongoose.Schema(
   {
-    orderId: {
+    order: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'Order',

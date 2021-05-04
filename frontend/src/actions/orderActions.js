@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
@@ -18,9 +18,21 @@ import {
   ORDER_DELIVER_REQUEST,
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
-} from "../constants/orderConstants";
+  ORDER_ASSIGN_DRIVER_REQUEST,
+  ORDER_ASSIGN_DRIVER_SUCCESS,
+  ORDER_ASSIGN_DRIVER_FAIL,
+  ORDER_DRIVER_REQUEST,
+  ORDER_DRIVER_SUCCESS,
+  ORDER_DRIVER_FAIL,
+  ORDER_MARK_DRIVER_DELIVERED_REQUEST,
+  ORDER_MARK_DRIVER_DELIVERED_SUCCESS,
+  ORDER_MARK_DRIVER_DELIVERED_FAIL,
+  ORDER_MARK_DRIVER_FAILED_REQUEST,
+  ORDER_MARK_DRIVER_FAILED_SUCCESS,
+  ORDER_MARK_DRIVER_FAILED_FAIL,
+} from '../constants/orderConstants';
 
-export const createOrder = (order) => async (dispatch, getState) => {
+export const createOrder = order => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -32,7 +44,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -54,7 +66,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-export const getOrderDetails = (id) => async (dispatch, getState) => {
+export const getOrderDetails = id => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_DETAILS_REQUEST,
@@ -102,7 +114,7 @@ export const payOrder = (orderId, paymentResult) => async (
 
     const config = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -128,7 +140,7 @@ export const payOrder = (orderId, paymentResult) => async (
   }
 };
 
-export const deliverOrder = (order) => async (dispatch, getState) => {
+export const deliverOrder = order => async (dispatch, getState) => {
   try {
     dispatch({
       type: ORDER_DELIVER_REQUEST,
@@ -159,7 +171,7 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === 'Not authorized, token failed') {
       // dispatch(logout());
     }
     dispatch({
@@ -168,7 +180,6 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
     });
   }
 };
-
 
 export const listMyOrders = () => async (dispatch, getState) => {
   try {
@@ -188,17 +199,17 @@ export const listMyOrders = () => async (dispatch, getState) => {
 
     const { data } = await axios.get(
       `/api/orders/myorders`,
-    //   paymentResult,
+      //   paymentResult,
       config
     );
 
     dispatch({
-        type: ORDER_LIST_MY_SUCCESS,
+      type: ORDER_LIST_MY_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-        type: ORDER_LIST_MY_FAIL,
+      type: ORDER_LIST_MY_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
@@ -234,11 +245,167 @@ export const listOrders = () => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    if (message === "Not authorized, token failed") {
+    if (message === 'Not authorized, token failed') {
       // dispatch(logout());
     }
     dispatch({
       type: ORDER_LIST_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const orderAssignDriver = (id, body) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_ASSIGN_DRIVER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/orders/${id}`, body, config);
+
+    dispatch({
+      type: ORDER_ASSIGN_DRIVER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      // dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_ASSIGN_DRIVER_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const orderDriver = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_DRIVER_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/orders/driver', config);
+
+    dispatch({
+      type: ORDER_DRIVER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      // dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_DRIVER_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const orderMarkDriverDelivered = id => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_MARK_DRIVER_DELIVERED_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${id}/driver/deliver`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ORDER_MARK_DRIVER_DELIVERED_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      // dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_MARK_DRIVER_DELIVERED_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const orderMarkDriverFailed = id => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_MARK_DRIVER_FAILED_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${id}/driver/fail`,
+      {},
+      config
+    );
+
+    dispatch({
+      type: ORDER_MARK_DRIVER_FAILED_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      // dispatch(logout());
+    }
+    dispatch({
+      type: ORDER_MARK_DRIVER_FAILED_FAIL,
       payload: message,
     });
   }

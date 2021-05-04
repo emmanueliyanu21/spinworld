@@ -20,7 +20,19 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_RESET,
-} from "../constants/orderConstants";
+  ORDER_ASSIGN_DRIVER_REQUEST,
+  ORDER_ASSIGN_DRIVER_SUCCESS,
+  ORDER_ASSIGN_DRIVER_FAIL,
+  ORDER_DRIVER_REQUEST,
+  ORDER_DRIVER_SUCCESS,
+  ORDER_DRIVER_FAIL,
+  ORDER_MARK_DRIVER_DELIVERED_REQUEST,
+  ORDER_MARK_DRIVER_DELIVERED_SUCCESS,
+  ORDER_MARK_DRIVER_DELIVERED_FAIL,
+  ORDER_MARK_DRIVER_FAILED_REQUEST,
+  ORDER_MARK_DRIVER_FAILED_SUCCESS,
+  ORDER_MARK_DRIVER_FAILED_FAIL,
+} from '../constants/orderConstants';
 
 export const orderCreateReducer = (state = {}, action) => {
   switch (action.type) {
@@ -150,6 +162,100 @@ export const orderListReducer = (state = { orders: [] }, action) => {
         orders: action.payload,
       };
     case ORDER_LIST_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const orderAssignDriverReducer = (
+  state = { loading: false },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_ASSIGN_DRIVER_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_ASSIGN_DRIVER_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_ASSIGN_DRIVER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const orderDriverReducer = (state = { loading: false }, action) => {
+  switch (action.type) {
+    case ORDER_DRIVER_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_DRIVER_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        orders: action.payload,
+      };
+    case ORDER_DRIVER_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const orderMarkDriverDeliveredReducer = (
+  state = { loading: false },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_MARK_DRIVER_DELIVERED_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_MARK_DRIVER_DELIVERED_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_MARK_DRIVER_DELIVERED_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const orderMarkDriverFailedReducer = (
+  state = { loading: false },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_MARK_DRIVER_FAILED_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_MARK_DRIVER_FAILED_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_MARK_DRIVER_FAILED_FAIL:
       return {
         loading: false,
         error: action.payload,

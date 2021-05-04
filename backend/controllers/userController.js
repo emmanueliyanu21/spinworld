@@ -1,6 +1,8 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import random from 'randomstring';
+import Referral from '../models/referralModel.js';
 
 // @desc Auth user and get token
 // @route POST /api/users/login
@@ -17,6 +19,7 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       isSeller: user.isSeller,
+      referralCode: user.referralCode,
       token: generateToken(user._id),
     });
   } else {
@@ -29,7 +32,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, referralCode } = req.body;
 
   const userExists = await User.findOne({ email });
 
@@ -42,9 +45,22 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    referralCode: random.generate({
+      length: 6,
+      charset: 'alphabetic',
+    }),
   });
 
   if (user) {
+    let referralUser;
+    if (referralCode) {
+      referralUser = await User.findOne({ referralCode });
+      await Referral.create({
+        referrerUserId: referralUser._id,
+        referredUserId: user._id,
+      });
+    }
+
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -52,6 +68,7 @@ const registerUser = asyncHandler(async (req, res) => {
       isAdmin: user.isAdmin,
       isSeller: user.isSeller,
       token: generateToken(user._id),
+      referralCode: user.referralCode,
     });
   } else {
     res.status(400);
@@ -72,6 +89,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       isSeller: user.isSeller,
+      referralCode: user.referralCode,
     });
   } else {
     res.status(404);
@@ -113,6 +131,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       isSeller: updatedUser.isSeller,
+      referralCode: updatedUser.referralCode,
       businessName: updatedUser.businessName,
       businessNumber: updatedUser.businessNumber,
       businessAddress: updatedUser.businessAddress,
@@ -167,6 +186,7 @@ const updateUser = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       isSeller: updatedUser.isSeller,
+      referralCode: updatedUser.referralCode,
     });
   } else {
     res.status(404);

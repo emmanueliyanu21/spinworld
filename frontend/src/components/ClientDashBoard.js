@@ -31,12 +31,9 @@ const ClientDashBoard = () => {
       </Link>
       <Link
         className={`${
-          location.pathname === '/profile' ||
-          location.pathname === '/edit-profile'
-            ? 'bg-info'
-            : ''
+          location.pathname === '/order-dashboard' ? 'bg-info' : ''
         }`}
-        to='#'
+        to='order-dashboard'
       >
         <Card.Body className='border-bottom'>
           <Card.Text>

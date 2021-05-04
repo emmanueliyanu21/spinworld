@@ -128,13 +128,64 @@ const assignDriverToOrder = asyncHandler(async (req, res) => {
     throw new Error('Order not found');
   }
   const newOrderTracking = await OrderTracking.create({
-    orderId: order.id,
+    order: order.id,
     driver: driver,
   });
   res.json(newOrderTracking);
 });
 
+const getOrderByDriver = asyncHandler(async (req, res) => {
+  const order = await OrderTracking.find({ driver: req.user._id }).populate({
+    path: 'order',
+    populate: {
+      path: 'user',
+    },
+  });
+
+  if (order.length === 0) {
+    res.status(404);
+    throw new Error('you have not been assign any order');
+  }
+  res.json(order);
+});
+
+const driverUpdateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await OrderTracking.findById(req.params.id);
+  if (req.user._id.toString() !== order.driver.toString()) {
+    res.status(401);
+    throw new Error('you are not authorized to perform this action');
+  }
+  if (order) {
+    order.orderStatus = 'Delivered';
+    order.time = Date.now();
+
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+const driverUpdateOrderToFailed = asyncHandler(async (req, res) => {
+  const order = await OrderTracking.findById(req.params.id);
+
+  if (order) {
+    order.orderStatus = 'Failed';
+    order.time = Date.now();
+
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 export {
+  driverUpdateOrderToDelivered,
+  getOrderByDriver,
   addOrderItems,
   getOrderById,
   updateOrderToPaid,
@@ -142,4 +193,5 @@ export {
   getOrders,
   updateOrderToDelivered,
   assignDriverToOrder,
+  driverUpdateOrderToFailed,
 };

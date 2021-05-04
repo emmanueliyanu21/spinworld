@@ -29,6 +29,7 @@ import AdminHomeScreen from './screens/AdminHomeScreen';
 import AdminUserScreen from './screens/AdminUserScreen';
 import PropertyScreen from './screens/PropertyScreen';
 import AdminOrderScreen from './screens/AdminOrderScreen';
+import DriverOrderScreen from './screens/DriverOrderScreen';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         component={UploadPropertyScreen}
         exact
       />
+      <Route path='/order-dashboard' component={DriverOrderScreen} exact />
 
       <Route path='/edit-profile' component={EditUserScreen} exact />
       <Route path='/dashboard' component={MyDashboardScreen} />

@@ -28,6 +28,10 @@ import {
   orderDeliverReducer,
   orderListMyReducer,
   orderListReducer,
+  orderAssignDriverReducer,
+  orderDriverReducer,
+  orderMarkDriverDeliveredReducer,
+  orderMarkDriverFailedReducer,
 } from './reducers/orderReducers';
 
 import {
@@ -57,7 +61,11 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
   orderListMy: orderListMyReducer,
+  orderAssignDriver: orderAssignDriverReducer,
   orderList: orderListReducer,
+  orderDriver: orderDriverReducer,
+  orderMarkDriverDelivered: orderMarkDriverDeliveredReducer,
+  orderMarkDriverFailed: orderMarkDriverFailedReducer,
   propertyList: propertyListReducer,
   propertyCreate: propertyCreateReducer,
   propertyDelete: propertyDeleteReducer,

@@ -25,7 +25,7 @@ import {
 import axios from 'axios';
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants';
 
-export const login = (email, password) => async dispatch => {
+export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
       type: USER_LOGIN_REQUEST,
@@ -60,14 +60,17 @@ export const login = (email, password) => async dispatch => {
   }
 };
 
-export const logout = () => dispatch => {
+export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_RESET });
 };
 
-export const register = (name, email, password) => async dispatch => {
+export const register = (name, email, password, referralCode) => async (
+  dispatch
+) => {
+  console.log(referralCode);
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -78,12 +81,17 @@ export const register = (name, email, password) => async dispatch => {
         'Content-Type': 'application/json',
       },
     };
-
-    const { data } = await axios.post(
-      '/api/users',
-      { name, email, password },
-      config
-    );
+    let body = {
+      name,
+      email,
+      password,
+      referralCode,
+    };
+    if (referralCode === null) {
+      delete body.referralCode;
+    }
+    console.log(body);
+    const { data } = await axios.post('/api/users', body, config);
 
     dispatch({
       type: USER_REGISTER_SUCCESS,
@@ -97,6 +105,7 @@ export const register = (name, email, password) => async dispatch => {
 
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    console.log(error.response);
     dispatch({
       type: USER_REGISTER_FAIL,
       payload:
@@ -107,7 +116,7 @@ export const register = (name, email, password) => async dispatch => {
   }
 };
 
-export const getUserDetails = id => async (dispatch, getState) => {
+export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -141,7 +150,7 @@ export const getUserDetails = id => async (dispatch, getState) => {
   }
 };
 
-export const updateUserProfile = user => async (dispatch, getState) => {
+export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_UPDATE_PROFILE_REQUEST,
@@ -213,7 +222,7 @@ export const listUsers = () => async (dispatch, getState) => {
   }
 };
 
-export const deleteUser = id => async (dispatch, getState) => {
+export const deleteUser = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_DELETE_REQUEST,
@@ -247,7 +256,7 @@ export const deleteUser = id => async (dispatch, getState) => {
   }
 };
 
-export const updateUser = user => async (dispatch, getState) => {
+export const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_UPDATE_REQUEST,

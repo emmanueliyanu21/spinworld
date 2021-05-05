@@ -8,6 +8,7 @@ import Loader from '../components/Loader';
 import { listProducts } from '../actions/productActions';
 
 const HomeScreen = (props) => {
+  console.log(window.location.host);
   let query = new URLSearchParams(useLocation().search);
   if (query.get('referralcode')) {
     localStorage.setItem('referralcode', query.get('referralcode'));
